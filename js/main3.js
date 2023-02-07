@@ -1,6 +1,7 @@
 //initialize function called when the script loads
 function initialize(){
     cities();
+    //
 };
 
 //function to create a table with cities and their populations
