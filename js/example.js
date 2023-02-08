@@ -1,4 +1,3 @@
-// load city population data from previous json file to generate table
 //initialize function called when the script loads
 function initialize(){
 	cities();
@@ -6,8 +5,8 @@ function initialize(){
 
 //function to create a table with cities and their populations
 function cities(){
-    //define two arrays for cities and population
-    var cityPop = [
+	//define two arrays for cities and population
+	var cityPop = [
 		{ 
 			city: 'Madison',
 			population: 233209
@@ -47,75 +46,79 @@ function cities(){
 	//append the table element to the div
 	document.querySelector("#mydiv").appendChild(table);
 
-    //add new elements, prepare for the citysize column and click event
     addColumns(cityPop);
     addEvents();
 
 };
-// add the citysize column
-function addColumns(cityPop){
-    // read the table rows
-	var rows = document.querySelectorAll("tr")
-    // add new column for each row
-    document.querySelectorAll("tr").forEach(function(row, i){
 
-    	if (i == 0){
-            // column header
-    		row.insertAdjacentHTML('beforeend', '<th>City Size</th>');
+//function to add a new column to the table
+function addColumns(cityPop){
+    
+	//select all column rows
+	var rows = document.querySelectorAll("tr")
+	//loop to add a new column to each row
+	document.querySelectorAll("tr").forEach(function(row,i){
+		//for first row in the table, add the column header
+		if (i == 0){
+    		//create new header element
+			newHeader = document.createElement('th');
+			newHeader.innerHTML = 'City Size';
+			//append header element to table
+			row.appendChild(newHeader)
     	} else {
-        //classfiy city level   
     		var citySize;
 
     		if (cityPop[i-1].population < 100000){
     			citySize = 'Small';
-
     		} else if (cityPop[i-1].population < 500000){
     			citySize = 'Medium';
-
     		} else {
     			citySize = 'Large';
     		};
-            //apply cell to each row
-			var newRow = document.createElement('td')
+
+			//add new table cell with the city size
+    		var newRow = document.createElement('td')
 			newRow.innerHTML = citySize
-			row.appendChild(newRow)
+			//append city size cell to table
+			row.appendChild(newRow)	
     	};
-    });
+	})
 };
 
-//add the click event
+//function to add mouse events to table
 function addEvents(){
-    // read the table rows
+	//add random color on mouseover
+
+	//select the table element
 	table = document.querySelector("table");
 
-    // when cursor hovering over the table
+	//add mouseover event
 	document.querySelector("table").addEventListener("mouseover", function(){
-		
 		var color = "rgb(";
-        // create random color
-	    for (var i=0; i<3; i++){
+		//generate random color
+		for (var i=0; i<3; i++){
 
 			var random = Math.round(Math.random() * 255);
-
 			color += random;
 
 			if (i<2){
 				color += ",";
-			
 			} else {
 				color += ")";
-		    };
+			};
 		}
+		//style table with the random style
 		table.style.color = color;
-	});
-    
-	// add the click event
-	function clickme(){
+	}); 
 
-		alert('Hey, you clicked me!')
+	//function that shows an alert on click
+	function clickme(){
+		alert('Hey, you clicked me!');
 	};
-	// when mouse clicked table
-		table.addEventListener("click", clickme);
-    };	
-// call the mouseevent function
-document.addEventListener('DOMContentLoaded', initialize)
+
+	//event listener for the click
+	table.addEventListener("click", clickme)
+};
+
+//call the initialize function when the document has loaded
+document.addEventListener('DOMContentLoaded',initialize)
