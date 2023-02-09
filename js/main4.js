@@ -2,6 +2,8 @@
 //initialize function called when the script loads
 function initialize(){
 	cities();
+    Ajax();
+    debugAjax();
 };
 
 //function to create a table with cities and their populations
@@ -120,19 +122,21 @@ function addEvents(){
 // call the mouseevent function
 document.addEventListener('DOMContentLoaded', initialize)
 
-//activity 4
-function JsAjax(){
-    fetch('data/Megacities.geojson')
+
+function Ajax(){
+    var myData;
+    fetch('data/MegaCities.geojson')
     .then(function(response){
-        returnresponse.json();
+        return response.json();
 
     })
-    then(function(response){
-        cities = response;
-        console.log(cities);
+    .then(function(response){
+        myData = response;
+        console.log(myData);
     })
+    console.log(myData)
 
-}
+};
 
 
 function debugCallback(myData){
@@ -141,14 +145,10 @@ function debugCallback(myData){
 
 function debugAjax(){
 	
-	var myData;
-	
 	fetch("data/MegaCities.geojson")
 		.then(function(response){
-			debugCallback(response);
+            return response.json();
 		})
+        .then(debugCallback)
 
-	document.querySelector("#mydiv").insertAdjacentHTML('beforeend', '<br>GeoJSON data:<br>' + JSON.stringify(myData))
 };
-
-document.querySelector("#mydiv").insertAdjacentHTML('beforeend', 'GeoJSON data: ' + JSON.stringify(myData))
