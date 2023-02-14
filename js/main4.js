@@ -1,5 +1,6 @@
 // load city population data from previous json file to generate table
 //initialize function called when the script loads
+// initiatilize all required functions at same time to avoid over wrtting
 function initialize(){
 	cities();
     Ajax();
@@ -124,13 +125,16 @@ document.addEventListener('DOMContentLoaded', initialize)
 
 
 function Ajax(){
+	//set new variable and fetch privousely converted geojson file
     var myData;
-    fetch('data/MegaCities.geojson')
+	fetch('data/MegaCities.geojson')
+	//convert to usable form
     .then(function(response){
         return response.json();
 
     })
     .then(function(response){
+		// variable = response and print it
         myData = response;
         console.log(myData);
     })
@@ -138,17 +142,18 @@ function Ajax(){
 
 };
 
-
+// forming the callback. display it as string after the previous table
 function debugCallback(myData){
 	document.querySelector("#mydiv").insertAdjacentHTML('beforeend', 'GeoJSON data: ' + JSON.stringify(myData))
 };
 
 function debugAjax(){
-	
+	//gathering previous Ajax section
 	fetch("data/MegaCities.geojson")
 		.then(function(response){
             return response.json();
 		})
+		// using callback function here to correctly display it on web
         .then(debugCallback)
 
 };
